@@ -1,31 +1,37 @@
 import os
 import fnmatch
 
-filetypes = ['*.txt','*.log','*.csv','*.pcap']
 
 def isFile(filepath):
-  #check if the filepath is just a single filepath
-  #if yes, return true, not false
-  return os.path.isfile(filepath)
+  #check if file is from allowable type
+  filetypes = ['.txt','.log','.csv','.pcap']
+
+  for filetype in filetypes:
+    if filepath.endswith(filetype):
+      return True
+  return False
 
 def isDirectory(filepath):
-  #check if filepath is isDirectory
-  #if yes return true, else false
-  return os.path.isdir(filepath)
+  #check if filepath is is a directory
+  if os.path.isdir(filepath):
+    return True
+  else:
+    return False
 
 def getFilesFromDirectory(filepath,recursive=False):
+  #the output will be a tuple of true/false, and a list of the files
+  files = []
   if isDirectory(filepath):
-    files = []
     if recursive:
       for root, dirnames, filenames in os.walk(filepath):
-        for filetype in filetypes:
-          for filename in fnmatch.filter(filenames, filetype):
+        for filename in filenames:
+          if isFile(os.path.join(root,filename)):
             files.append(os.path.join(root,filename))
       return True, files
     else:
-      for item in os.listdir(filepath):
-        if isFile(os.path.join(filepath,item)):
-          files.append(os.path.join(filepath,item))
+      for filename in os.listdir(filepath):
+        if isFile(os.path.join(filepath,filename)):
+          files.append(os.path.join(filepath,filename))
       return True, files
   else:
     return False, files

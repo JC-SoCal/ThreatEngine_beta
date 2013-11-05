@@ -4,7 +4,7 @@ passCount = 0
 failCount = 0
 totalCount = 0
 
-def runIsTest(function, varible, negate=False):
+def testIsFile(function, varible, negate):
 	global passCount
 	global failCount
 	global totalCount
@@ -44,16 +44,16 @@ d4 = "testdata\\teFileHandler\\dir2\\dir3"
 ###########################
 
 print "Positive File Test"
-runIsTest(teFileHandler.isFile, f1)
-runIsTest(teFileHandler.isFile, f2)
-runIsTest(teFileHandler.isFile, f3)
-runIsTest(teFileHandler.isFile, f4)
+testIsFile(teFileHandler.isFile, f1, False)
+testIsFile(teFileHandler.isFile, f2, False)
+testIsFile(teFileHandler.isFile, f3, False)
+testIsFile(teFileHandler.isFile, f4, False)
 
 print "Negative File Test"
-runIsTest(teFileHandler.isFile, d1, True)
-runIsTest(teFileHandler.isFile, d2, True)
-runIsTest(teFileHandler.isFile, d3, True)
-runIsTest(teFileHandler.isFile, d4, True)
+testIsFile(teFileHandler.isFile, d1, True)
+testIsFile(teFileHandler.isFile, d2, True)
+testIsFile(teFileHandler.isFile, d3, True)
+testIsFile(teFileHandler.isFile, d4, True)
 
 ###################
 ## Final Results ##
