@@ -5,3 +5,5 @@ print "\n"
 import tests_teFileHandler_getFilesFromDirectory
 print "\n"
 import tests_teFileHandler_getFilesFromDirectory_fileTypes
+print "\n"
+import tests_tePcapParser_parsePCAP

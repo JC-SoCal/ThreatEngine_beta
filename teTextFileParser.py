@@ -1,9 +1,6 @@
 import socket
 import re
 
-def parserData(filters=[]):
-  pass
-
 def f_IP(data):
   #import socket
   filterName = 'IP'
