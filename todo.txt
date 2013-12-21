@@ -1,0 +1,6 @@
+add tests for tefilehandler:
+	isPcapFile
+	isTextFile
+	sortFilesByType
+
+	

@@ -142,10 +142,11 @@ def parsePCAP(filepath):
   h = readFile(filepath)
   pcap = openPCAP(h)
   data = carveData(pcap,[c_IPv4,c_Domain])
-  result = []
+  result = {}
   ips = filterData(data,filters=[f_IPv4])
   domains = filterData(data,filters=[f_Domain])
-  result.append({'ips':list(ips)})
-  result.append({'domains':list(domains)})
+  result['filename'] = [filepath]
+  result['ips'] = list(ips)
+  result['domains'] = list(domains)
   closeFile(h)
   return True,result

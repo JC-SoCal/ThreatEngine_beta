@@ -46,7 +46,7 @@ f1 = "testdata\\pcaps\\small.pcap"
 ###########################
 
 print "Positive PCAP File Test"
-expected = [{'ips': ['192.168.106.255', '98.138.253.109', '66.96.162.150', '192.168.106.2', '192.168.106.130', '98.139.183.24', '206.190.36.45', '8.8.8.8']}, {'domains': ['yahoo.com']}]
+expected = {'domains': ['yahoo.com'], 'ips': ['192.168.106.255', '98.138.253.109', '66.96.162.150', '192.168.106.2', '192.168.106.130', '98.139.183.24', '206.190.36.45', '8.8.8.8'], 'filename': ['testdata\\pcaps\\small.pcap']}
 testParsePCAP(tePcapFileParser.parsePCAP, f1, expected, False)
 
 ###################

@@ -1,5 +1,9 @@
 import os
 import fnmatch
+import struct
+import mimetypes
+import teTextFileParser
+import tePcapFileParser
 
 
 def isFile(filepath):
@@ -35,3 +39,63 @@ def getFilesFromDirectory(filepath,recursive=False):
       return True, files
   else:
     return False, files
+
+def isPcapFile(filepath):
+  #determine if the file is a pcap
+  pcapSig = '\xd4\xc3\xb2\xa1'
+  with open(filepath, 'rb') as f:
+    bytes = f.read(4)  
+    fileSig = struct.unpack("4s", bytes)[0]
+  if fileSig == pcapSig:
+    return True
+  else:
+    return False
+
+def isTextFile(filepath):
+  #determine if the file is a pcap
+  mime = mimetypes.guess_type(filepath)
+  if 'text/plain' == mime[0]:
+    return True
+  else:
+    return False
+
+def sortFilesByType(files):
+  #sorts files by their type, either text or pcap
+  textFiles = []
+  pcapFiles = []
+  for f in files:
+    if isTextFile(f):
+      textFiles.append(f)
+    elif isPcapFile(f):
+      pcapFiles.append(f)
+  return {'text':textFiles, 'pcap':pcapFiles}
+
+def getFilesSorted(filepath):
+  #determine what the user gave us, a file or directory?
+  if isDirectory(filepath):
+    status,files = getFilesFromDirectory(filepath)
+  elif isFile(filepath):
+    files = [filepath]
+  return sortFilesByType(files)
+
+def getStats(sortedFiles):
+  stats = [] 
+  for f in sortedFiles['pcap']:
+    status, data = tePcapFileParser.parsePCAP(f)
+    info = {}
+    info['filename'] = data['filename']
+    for name in data:
+      if name != 'filename':
+        info[name] = len(data[name])
+    stats.append(info)
+    # print data
+
+  for f in sortedFiles['text']:
+    status, data = teTextFileParser.parseText(f)
+    info = {}
+    info['filename'] = data['filename'][0]
+    for name in data:
+      if name != 'filename':
+        info[name] = len(data[name])
+    stats.append(info)
+  return stats    
